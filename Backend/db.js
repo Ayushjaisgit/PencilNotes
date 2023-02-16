@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 mongoose.set("strictQuery", false);
 
 
-const mongoURI = "mongodb://localhost:27017/?tls=false&readPreference=primary&directConnection=true"
+const mongoURI = "mongodb://localhost:27017/pencilnotes?tls=false&readPreference=primary&directConnection=true"
 
 
 const connectToMongo = ()=>{
