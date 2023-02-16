@@ -22,6 +22,6 @@ const UserSchema = new Schema({
 
   });
 const User = mongoose.model('user', UserSchema);
-User.createIndexes();
+// User.createIndexes();
   module.exports = mongoose.model('user', UserSchema)
 //   model bnaya export krte time model ko naam diya schema se ek model bnaya then nam diya and then schema ko pass kiya
