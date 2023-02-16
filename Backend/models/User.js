@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const { Schema } = mongoose;
 const UserSchema = new Schema({
     name:{
         type:String,
@@ -10,7 +10,7 @@ const UserSchema = new Schema({
         required: true,
         unique:true
     },
-    Password:{
+    password:{
         type:String,
         required: true
     },
@@ -21,6 +21,7 @@ const UserSchema = new Schema({
 
 
   });
-
+const User = mongoose.model('user', UserSchema);
+User.createIndexes();
   module.exports = mongoose.model('user', UserSchema)
 //   model bnaya export krte time model ko naam diya schema se ek model bnaya then nam diya and then schema ko pass kiya
