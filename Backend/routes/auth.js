@@ -33,7 +33,6 @@ router.post('/createuser', [
         return res.status(400).json({ errors: errors.array() });
     }
 
-
     // check whether the user with this email exists already
     try {
 
@@ -46,7 +45,7 @@ router.post('/createuser', [
             return res.status(400).json({ error: 'sorry a user with this email already exists' })
         }
 
-
+        // password encryption
         // using bcryptjs and bcryptjs returns the promise and that's why we'll use await 
         const salt = await bcrypt.genSalt(10) // generating random salt of ten values
         const secPass = await bcrypt.hash(req.body.password, salt) // bcrypt.hash is used to initialize the bcrypt
@@ -57,10 +56,9 @@ router.post('/createuser', [
             password: secPass,
         });
 
-
         const data = {
-            user:{
-                id:user.id
+            user: {
+                id: user.id
             }
         }
         const authtoken = jwt.sign(data, JWT_SECRET)
@@ -71,15 +69,46 @@ router.post('/createuser', [
         //   res.json({error:'please enter a unique value for email', messege:err.messege
 
         // res.json({ user })
-        res.json({authtoken})
+        res.json({ authtoken })
 
     } catch (error) {
         console.log(error.messege);
         res.status(500).send("some error occured")
     }
+})
 
+// till here it was all about creating a user 
+
+// Authenticate a user 
+
+router.post('/createuser', [
+
+    body('email', ' Enter a valid Email').isEmail(),
+    body('password', 'Passwords cannot be blank').exists(),
+
+    // password must be at least 5 chars long
+    // body('password', ' Password must be min 5').isLength({ min: 5 })
+
+], async (req, res) => {
+     // if there are errors return bad error
+     const errors = validationResult(req);
+
+     if (!errors.isEmpty()) {
+         return res.status(400).json({ errors: errors.array() });
+     }
+
+     const {email, password}= req.body;
+     try{
+        let user = User.findOne({email });
+        if (!user){
+            return res.status(400).json
+        }
+     }catch(error){
+
+     }
 
 })
+
 
 // sending data from body to DB 
 // const user = User(req.body)
