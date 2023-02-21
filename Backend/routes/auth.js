@@ -9,10 +9,11 @@ const bcrypt = require('bcryptjs');
 // jwt 
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'This is a string'
+//middleware fetchuser import
+const fetchuser = require('../middleware/FetchUser')
 
 
-
-
+// Route 1 
 // create the user using POST "/api/auth/createuser" does not require auth no login required
 // used to send data to the DB
 
@@ -45,7 +46,7 @@ router.post('/createuser', [
             return res.status(400).json({ error: 'sorry a user with this email already exists' })
         }
 
-        // password encryption
+        // password encryption 
         // using bcryptjs and bcryptjs returns the promise and that's why we'll use await 
         const salt = await bcrypt.genSalt(10) // generating random salt of ten values
         const secPass = await bcrypt.hash(req.body.password, salt) // bcrypt.hash is used to initialize the bcrypt
@@ -77,17 +78,15 @@ router.post('/createuser', [
     }
 })
 
+
+// Route 2
 // till here it was all about creating a user 
+// Authenticate a user using post "api/auth/login" no login required
 
-// Authenticate a user 
-
-router.post('/createuser', [
+router.post('/login', [
 
     body('email', ' Enter a valid Email').isEmail(),
     body('password', 'Passwords cannot be blank').exists(),
-
-    // password must be at least 5 chars long
-    // body('password', ' Password must be min 5').isLength({ min: 5 })
 
 ], async (req, res) => {
      // if there are errors return bad error
@@ -99,23 +98,54 @@ router.post('/createuser', [
 
      const {email, password}= req.body;
      try{
-        let user = User.findOne({email });
+        let user = await User.findOne({email});
         if (!user){
-            return res.status(400).json
+            return res.status(400).json({error:"Please try to login with correct credentials"})
         }
-     }catch(error){
 
+        const passwordCompare = await bcrypt.compare(password, user.password)
+        if (!passwordCompare) {
+            return res.status(400).json({error:"Please try to login with correct credentials"})
+        }
+
+        const data = {
+            user: {
+                id: user.id
+            }
+        }
+        const authtoken = jwt.sign(data, JWT_SECRET)
+        res.json({ authtoken })
+
+     }catch(error){
+        console.log(error.messege);
+        res.status(500).send("Internal server error")
      }
 
 })
 
+// Route 3
+// gives the logged in user details "api/auth/getuser" login required
 
-// sending data from body to DB 
-// const user = User(req.body)
-// user.save()
+router.post('/getuser',fetchuser, async (req, res) => {
+    try{
+        userId= req.user.id;
+        const user = await User.findById(userId).select("-password")
+        res.send(user)
+        
+    }
+    catch(error){
+        console.log(error.messege);
+        res.status(500).send("Internal server error")
+    }
+    
+    
+});
 
 
-// console.log(req.body)
-// res.send('Hello')
+
+
+
+
+
 
 module.exports = router;
