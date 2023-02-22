@@ -15,7 +15,7 @@ app.use('/api/notes', require('./routes/notes.js'))
 
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Pencil Notes app listening on port ${port}`)
 })
 
 module.exports = router ;
