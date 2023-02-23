@@ -1,10 +1,42 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import noteContext from "./noteContext"
 
 const NoteState = (props) =>{
-    
+    const notesInitial = [
+        {
+          "_id": "63f5521eccd4af8ac799ba16",
+          "user": "63efea77887af454795a2cb3",
+          "title": "My title",
+          "description": "Please Wake up and Early",
+          "tag": "Personal",
+          "date": "2023-02-21T23:22:06.205Z",
+          "__v": 0
+        },
+        
+        {
+          "_id": "63f55353d3e7bbad3ad846be",
+          "user": "63efea77887af454795a2cb3",
+          "title": "My title",
+          "description": "Please Wake up and Early",
+          "tag": "Personal",
+          "date": "2023-02-21T23:27:15.315Z",
+          "__v": 0
+        },
+        {
+          "_id": "63f55353d3e7bbad3ad846c0",
+          "user": "63efea77887af454795a2cb3",
+          "title": "My title",
+          "description": "Please Wake up and Early",
+          "tag": "Personal",
+          "date": "2023-02-21T23:27:15.526Z",
+          "__v": 0
+        }
+    ]
+
+    const [notes, setNotes] = useState(notesInitial)
+
     return(
-        <noteContext.Provider value={{}}>
+        <noteContext.Provider value={{notes, setNotes}}>
             {props.children}
         </noteContext.Provider>
     )
