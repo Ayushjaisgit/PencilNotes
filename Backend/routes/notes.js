@@ -15,7 +15,7 @@ router.get('/fetchallnotes', fetchuser, async (req, res) => {
         res.json(notes)
     } catch (error) {
         console.log(error.messege);
-        res.status(500).send("Internal server occured")
+        res.status(500).send("Internal server occured In Get User")
     }
 
 })
@@ -46,7 +46,7 @@ router.post('/addnote', fetchuser, [
 
         catch (error) {
             console.log(error.messege);
-            res.status(500).send("Internal server occured")
+            res.status(500).send("Internal server occured on adding a new Note")
         }
 
     });
@@ -77,7 +77,7 @@ router.post('/addnote', fetchuser, [
         }
         catch (error) {
             console.log(error.messege);
-            res.status(500).send("Internal server occured")
+            res.status(500).send("Internal server occured On Updating the note")
         }
             
         })
@@ -105,7 +105,7 @@ router.post('/addnote', fetchuser, [
 
         } catch (error) {
             console.log(error.messege);
-            res.status(500).send("Internal server occured")
+            res.status(500).send("Internal server occured On deleting a user's note")
         }
 
 

@@ -63,18 +63,11 @@ router.post('/createuser', [
             }
         }
         const authtoken = jwt.sign(data, JWT_SECRET)
-
-
-        //   .then(user => res.json(user))
-        //       .catch(err=>{console.log(err)})
-        //   res.json({error:'please enter a unique value for email', messege:err.messege
-
-        // res.json({ user })
         res.json({ authtoken })
 
     } catch (error) {
         console.log(error.messege);
-        res.status(500).send("some error occured")
+        res.status(500).send("Internal server error on creating a new user")
     }
 })
 
@@ -118,7 +111,7 @@ router.post('/login', [
 
      }catch(error){
         console.log(error.messege);
-        res.status(500).send("Internal server error")
+        res.status(500).send("Internal server error on Login")
      }
 
 })
@@ -135,7 +128,7 @@ router.post('/getuser',fetchuser, async (req, res) => {
     }
     catch(error){
         console.log(error.messege);
-        res.status(500).send("Internal server error")
+        res.status(500).send("Internal server error In get User")
     }
     
     
