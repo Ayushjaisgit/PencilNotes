@@ -49,7 +49,7 @@ router.post('/addnote', fetchuser, [
             res.status(500).send("Internal server occured")
         }
 
-    })
+    });
 
         // Route 3  Update an existing notes using PUT:"/api/notes/updatenote" . login required
 
