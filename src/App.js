@@ -15,7 +15,7 @@ function App() {
     <NoteState>
       <Router>
         <Navbar />
-        <Alert messege={"This is a better"} />
+        <Alert messege={"This is an alert component"} />
         <div className='container'>
         <Routes>
           <Route exact path="/" element={<Home />} />
