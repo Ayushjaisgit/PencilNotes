@@ -66,7 +66,7 @@ const Notes = () => {
                 </div>
             </div>
 
-            <div className="row my-3">
+            {/* <div className="row my-3">
                 <h2>You Notes</h2>
                 <div className="container mx-2"> 
                 {notes.length===0 && 'No notes to display'}
@@ -74,7 +74,7 @@ const Notes = () => {
                 {notes.map((note) => {
                     return <Noteitem key={note._id} updateNote={updateNote} note={note} />
                 })}
-            </div>
+            </div> */}
         </>
     )
 }
