@@ -1,16 +1,10 @@
-import React, { useContext } from 'react'
+import Notes from './Notes';
 
-import Notes from './Notes'
+export const Home = () => {
 
-
-
-const Home = () => {
-
-  return (
-    <>
-        <Notes/>
-    </>
-  )
+    return (
+        <div> 
+            <Notes/>
+        </div>
+    )
 }
-
-export default Home
