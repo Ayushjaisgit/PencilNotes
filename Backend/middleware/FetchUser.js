@@ -22,9 +22,7 @@ const JWT_SECRET = 'This is a string'
  
 
 const fetchuser = (req, res, next) => {
-    console.log("===",req.header('auth-token'))
     const token = req.header('auth-token')// Get the token from the "Authorization" header
-    console.log("===",token)
     if (!token) {
       res.status(401).send({ error: 'Please authenticate using a valid token' });
     }

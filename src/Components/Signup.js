@@ -1,10 +1,10 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Alert } from './Alert'
 import { useNavigate } from 'react-router-dom'
 
 
 const Signup = (props) => {
-    const [credentials, setCredentials] = useState({name:"", email: "", password: ""}) 
+    const [credentials, setCredentials] = useState({ name: "", email: "", password: "" })
     const [alertMessage, setAlertMessage] = useState('');
     const [showAlert, setShowAlert] = useState(false);
     let navigate = useNavigate();
@@ -17,37 +17,34 @@ const Signup = (props) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name : credentials.name,  email: credentials.email, password: credentials.password})
+            body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password })
         });
         const json = await response.json()
-        console.log("===========================",json);
-        console.log();
-        if (json.success){
+        if (json.success) {
             // Save the auth token and redirect
-            localStorage.setItem('authtoken', json.authtoken); 
+            localStorage.setItem('authtoken', json.authtoken);
             navigate("/notes");
 
         }
-        else{
+        else {
             setAlertMessage(json.error);
-      setShowAlert(true);
-            // alert(json.error);
+            setShowAlert(true);
         }
     }
 
-    const onChange = (e)=>{
-        setCredentials({...credentials, [e.target.name]: e.target.value})
+    const onChange = (e) => {
+        setCredentials({ ...credentials, [e.target.name]: e.target.value })
     }
     const closeAlert = () => {
         setShowAlert(false);
-      };
+    };
     return (
 
         <div>
-             {showAlert && (
-        <Alert message={alertMessage} onClose={closeAlert} />
-      )}
-            <form  onSubmit={handleSubmit}>
+            {showAlert && (
+                <Alert message={alertMessage} onClose={closeAlert} />
+            )}
+            <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="text" className="form-label">Full Name</label>
                     <input type="text" className="form-control" value={credentials.name} onChange={onChange} id="name" name="name" aria-describedby="emailHelp" />

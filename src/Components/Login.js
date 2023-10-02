@@ -19,18 +19,15 @@ const Login = (props) => {
             body: JSON.stringify({ email: credentials.email, password: credentials.password })
         });
         const json = await response.json()
-        console.log("===========================",json);
-        console.log();
-        if (json.success){
+        if (json.success) {
             // Save the auth token and redirect
-            localStorage.setItem('authtoken', json.authtoken); 
+            localStorage.setItem('authtoken', json.authtoken);
             navigate("/notes");
 
         }
         else {
             setAlertMessage(json.error);
             setShowAlert(true);
-            // alert(json.error);
         }
     }
 
