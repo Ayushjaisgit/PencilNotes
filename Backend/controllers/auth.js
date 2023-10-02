@@ -4,6 +4,7 @@ const User = require('../models/User')
 const { validationResult } = require('express-validator');
 // bcrypt used for hashing salt and pepper
 const bcrypt = require('bcryptjs');
+const argon2 = require('argon2')
 // jwt 
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'This is a string'
@@ -21,18 +22,16 @@ const createUser = async (req, res) => {
     // check whether the user with this email exists already
     try {
 
-        // create a new user 1
+        // create a new user 
         let user = await User.findOne({ email: req.body.email })
 
-        console.log(user)
 
         if (user) {
             return res.status(400).json({ error: 'sorry a user with this email already exists' })
         }
 
         // password encryption 
-        const salt = await bcrypt.genSalt(10) // generating random salt of ten values
-        const secPass = await bcrypt.hash(req.body.password, salt) // bcrypt.hash is used to initialize the bcrypt
+        const secPass = await argon2.hash(req.body.password)
 
         user = await User.create({
             name: req.body.name,
@@ -46,7 +45,11 @@ const createUser = async (req, res) => {
             }
         }
         const authtoken = jwt.sign(data, JWT_SECRET)
-        res.json({ authtoken })
+
+        if (!authtoken) {
+            return res.status(500).json({error:"Server Error"})
+        }
+        res.json({ authtoken, success:true })
 
     } catch (error) {
         console.log(error.messege);
@@ -63,17 +66,19 @@ const userLogin = async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
     }
 
+
     const {email, password}= req.body;
     try{
        let user = await User.findOne({email});
        if (!user){
-           return res.status(400).json({error:"Please try to login with correct credentials"})
+           return res.status(400).json({error:"No Account Found with this Email, Please Signup First"})
        }
-
-       const passwordCompare = await bcrypt.compare(password, user.password)
+       const passwordCompare = await argon2.verify(user.password, password)
+       console.log("===========",passwordCompare)
        if (!passwordCompare) {
            return res.status(400).json({error:"Please try to login with correct credentials"})
        }
+       console.log(user)
 
        const data = {
            user: {
@@ -81,7 +86,12 @@ const userLogin = async (req, res) => {
            }
        }
        const authtoken = jwt.sign(data, JWT_SECRET)
-       res.json({ authtoken })
+       console.log(authtoken)
+       if (!authtoken) {
+        return res.status(500).json({error:"Server Error"})
+    }
+
+       res.json({ authtoken, success:true })
 
     }catch(error){
        console.log(error.messege);

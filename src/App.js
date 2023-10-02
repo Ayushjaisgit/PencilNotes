@@ -1,16 +1,17 @@
 import './App.css';
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes ,
   Route
 } from "react-router-dom";
-import Navbar from '../src/components/Navbar';
-import { Home } from '../src/components/Home';
-import About from '../src/components/About';
+import Navbar from '../src/Components/Navbar';
+import { Home } from '../src/Components/Home';
+import About from '../src/Components/About';
 import NoteState from './context/notes/NoteState';
-import { Alert } from '../src/components/Alert';
-import Signup from '../src/components/Signup';
-import Login from '../src/components/Login';
+import { Alert } from '../src/Components/Alert';
+import Signup from '../src/Components/Signup';
+import Login from '../src/Components/Login';
+import Notes from '../src/Components/Notes';
 
 function App() {
   return (
@@ -18,22 +19,21 @@ function App() {
       <NoteState>
         <Router>
           <Navbar />
-          <Alert message="This is amazing React course" />
           <div className="container">
-            <Switch>
-              <Route exact path="/">
-                <Home />
+            <Routes >
+              <Route exact path="/" element = { <Home />}>
+               
               </Route>
-              <Route exact path="/about">
-                <About />
+              <Route exact path="/notes" element = {  <Notes />} >
+              
               </Route>
-              <Route exact path="/login">
-                <Login />
+              <Route exact path="/login" element = {  <Login />}>
+              
+              </Route> 
+              <Route exact path="/signup" element = {  <Signup />}>
+              
               </Route>
-              <Route exact path="/signup">
-                <Signup />
-              </Route>
-            </Switch>
+            </Routes>
           </div>
         </Router>
       </NoteState>

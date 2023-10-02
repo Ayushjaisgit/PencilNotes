@@ -20,14 +20,14 @@ router.post('/addnote', fetchuser, [
     body('title', ' Enter a valid title').isLength({ min: 3 }),
     body('description', 'Description must be atleast 5 characters').isLength({ min: 5 }),], notesController.addNote );
 
-        // Route 3  Update an existing notes using PUT:"/api/notes/updatenote" . login required
+// Route 3  Update an existing notes using PUT:"/api/notes/updatenote" . login required
 
-        router.put('/updatenote/:id', fetchuser, notesController.updateNote )
+router.put('/updatenote/:id', fetchuser, notesController.updateNote )
 
 
-        // Route 4  delete an existing notes using delete:"/api/notes/deletenote" . login required
+// Route 4  delete an existing notes using delete:"/api/notes/deletenote" . login required
 
-        router.delete('/deletenote/:id', fetchuser, notesController.deleteNote)
+router.delete('/deletenote/:id', fetchuser, notesController.deleteNote)
 
 
  

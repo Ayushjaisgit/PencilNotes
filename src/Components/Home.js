@@ -1,10 +1,12 @@
-import Notes from './Notes';
+import Login from './Login';
+// import Notes from './Notes';
 
 export const Home = () => {
 
     return (
         <div> 
-            <Notes/>
+            {/* <Notes/> */}
+            <Login/>
         </div>
     )
 }

@@ -66,6 +66,7 @@ const GetNote = async (req, res) => {
     try {
         const notes = await Note.find({ user: req.user.id });
         res.json(notes)
+        console.log(notes)
     } catch (error) {
         console.log(error.messege);
         res.status(500).send("Internal server occured In Get User")
